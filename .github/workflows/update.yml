@@ -1,64 +1,103 @@
-name: 🚀 Update Repository (Keep All Versions)
+nname: 🔄 Update Repository with All Versions
 
 on:
   push:
     paths:
       - 'debs/**'
   workflow_dispatch:
+    inputs:
+      force_rebuild:
+        description: '强制重建所有索引'
+        required: false
+        default: 'false'
 
 jobs:
-  update-index:
+  rebuild-index:
     runs-on: ubuntu-latest
     
     steps:
-    - name: 📥 Checkout code
+    - name: 📥 Checkout repository
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
     
-    - name: 🔧 Install required tools
+    - name: 📊 Check deb files
       run: |
-        sudo apt-get update
-        sudo apt-get install -y dpkg-scanpackages
-        sudo apt-get install -y bzip2 gzip
+        echo "=== 检查debs文件夹 ==="
+        if [ ! -d "debs" ]; then
+          echo "❌ debs文件夹不存在"
+          mkdir -p debs
+        fi
+        
+        echo "📁 文件夹内容："
+        ls -la debs/ || echo "空文件夹"
+        
+        echo "🔍 查找所有.deb文件："
+        find debs -name "*.deb" -type f | while read deb; do
+          echo "  - $deb"
+          # 显示文件信息
+          ls -lh "$deb"
+        done
+        
+        COUNT=$(find debs -name "*.deb" -type f | wc -l)
+        echo "✅ 总共找到 $COUNT 个.deb文件"
+        
+        if [ $COUNT -eq 0 ]; then
+          echo "⚠️  警告：没有找到.deb文件"
+        fi
     
-    - name: 📦 Generate Packages with ALL versions
+    - name: 🔧 Generate Packages with ALL versions
       run: |
-        echo "=== 开始生成包含所有版本的索引 ==="
+        echo "=== 生成包含所有版本的Packages文件 ==="
         
-        # 检查debs文件夹内容
-        echo "🔍 debs文件夹内容："
-        ls -la debs/ || echo "debs文件夹不存在"
+        # 清理旧文件
+        rm -f Packages Packages.bz2 Packages.gz
         
-        # 列出所有deb文件
-        echo "📋 所有deb文件："
-        find debs -name "*.deb" -type f 2>/dev/null || echo "未找到deb文件"
-        
-        # 关键：生成包含所有版本的Packages文件
-        if [ -d "debs" ]; then
-          echo "🔄 生成Packages文件..."
+        # 如果没有deb文件，创建空的Packages
+        if [ ! -d "debs" ] || [ -z "$(find debs -name '*.deb' -print -quit)" ]; then
+          echo "# Empty repository - waiting for packages" > Packages
+          echo "没有找到.deb文件，创建空索引"
+        else
+          echo "# Believess Repository" > Packages
+          echo "# Generated: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> Packages
+          echo "# This file includes ALL versions of all packages" >> Packages
+          echo "" >> Packages
+          
+          # 使用dpkg-scanpackages处理所有文件
           cd debs
           
-          # 使用dpkg-scanpackages生成包含所有文件的索引
-          # --multiversion 参数让所有版本都出现
-          dpkg-scanpackages . /dev/null 2>/dev/null | \
-            awk 'BEGIN{last=""} /^Package:/{pkg=$2} /^Version:/{ver=$2} /^$/ {if(pkg && ver) print pkg "=" ver; pkg=""; ver=""}' | \
-            sort -u > ../package_versions.txt
-          
-          # 生成完整的Packages文件
-          dpkg-scanpackages . /dev/null > ../Packages
+          # 为每个deb文件单独处理，确保所有版本都被包含
+          for DEB in *.deb; do
+            if [ -f "$DEB" ]; then
+              echo "🔨 处理: $DEB"
+              
+              # 提取包名用于临时处理
+              PKG_NAME=$(echo "$DEB" | cut -d_ -f1)
+              
+              # 创建一个临时目录来处理这个deb
+              TEMP_DIR="/tmp/deb_$PKG_NAME"
+              mkdir -p "$TEMP_DIR"
+              cp "$DEB" "$TEMP_DIR/"
+              
+              # 生成这个deb的条目
+              dpkg-scanpackages "$TEMP_DIR" /dev/null 2>/dev/null | \
+                sed "s|Filename: $TEMP_DIR/|Filename: ./debs/|" >> ../Packages
+              
+              # 添加空行分隔
+              echo "" >> ../Packages
+              
+              rm -rf "$TEMP_DIR"
+            fi
+          done
           
           cd ..
           
-          echo "📊 包含的包版本："
-          cat package_versions.txt || echo "无法读取版本信息"
-          
-          echo "✅ Packages文件生成完成"
-          echo "前几行内容："
-          head -20 Packages
-        else
-          echo "❌ debs文件夹不存在"
-          echo "# Empty repository" > Packages
+          # 手动验证
+          echo "📊 生成的条目统计："
+          echo "总条目数: $(grep -c '^Package:' Packages)"
+          echo "唯一包名: $(grep '^Package:' Packages | sort -u | wc -l)"
+          echo "所有版本:"
+          grep '^Package:' Packages | sort | uniq -c
         fi
     
     - name: 🗜️ Create compressed versions
@@ -66,54 +105,78 @@ jobs:
         echo "=== 创建压缩文件 ==="
         
         if [ -f "Packages" ]; then
-          # 统计信息
-          PACKAGE_COUNT=$(grep -c "^Package:" Packages || echo "0")
-          VERSION_COUNT=$(grep -c "^Version:" Packages || echo "0")
+          # 验证文件内容
+          echo "📄 Packages文件前100个字符："
+          head -c 100 Packages
+          echo ""
           
-          echo "📊 统计："
-          echo "  包条目数: $PACKAGE_COUNT"
-          echo "  版本数: $VERSION_COUNT"
+          echo "📦 创建压缩版本..."
+          bzip2 -9fk Packages
+          gzip -9fk Packages
           
-          # 创建压缩文件
-          bzip2 -kf Packages
-          gzip -kf Packages
+          echo "📊 文件大小："
+          ls -lh Packages*
           
-          # 创建版本列表文件
-          echo "# Believess Repository - Version History" > VERSIONS.txt
-          echo "# Generated: $(date)" >> VERSIONS.txt
+          # 创建版本清单
+          echo "# Version Manifest" > VERSIONS.txt
+          echo "Repository: believess" >> VERSIONS.txt
+          echo "Updated: $(date)" >> VERSIONS.txt
           echo "" >> VERSIONS.txt
-          
-          # 提取所有版本信息
-          awk '
-            /^Package:/ {pkg=$2}
-            /^Version:/ {ver=$2}
-            /^Filename:/ {file=$2}
-            /^$/ {
-              if (pkg && ver && file) {
-                printf "%s %s (%s)\n", pkg, ver, file
-              }
-              pkg=""; ver=""; file=""
-            }
-          ' Packages | sort >> VERSIONS.txt
-          
+          echo "Available Packages:" >> VERSIONS.txt
+          awk '/^Package:/ {pkg=$2} /^Version:/ {ver=$2} /^$/ {if(pkg && ver) print pkg " " ver; pkg=""; ver=""}' Packages | \
+            sort >> VERSIONS.txt
         else
           echo "❌ Packages文件不存在"
-          touch Packages.bz2 Packages.gz VERSIONS.txt
+          touch Packages.bz2 Packages.gz
         fi
     
-    - name: 💾 Commit changes
+    - name: 📝 Create debug info
       run: |
+        echo "=== 调试信息 ===" > DEBUG.md
+        echo "生成时间: $(date)" >> DEBUG.md
+        echo "" >> DEBUG.md
+        echo "**debs文件夹内容：**" >> DEBUG.md
+        echo '```' >> DEBUG.md
+        ls -la debs/ >> DEBUG.md 2>/dev/null || echo "空文件夹" >> DEBUG.md
+        echo '```' >> DEBUG.md
+        echo "" >> DEBUG.md
+        
+        echo "**Packages文件统计：**" >> DEBUG.md
+        if [ -f "Packages" ]; then
+          echo "- 总行数: $(wc -l < Packages)" >> DEBUG.md
+          echo "- 包条目: $(grep -c '^Package:' Packages)" >> DEBUG.md
+          echo "- 版本数: $(grep -c '^Version:' Packages)" >> DEBUG.md
+          echo "" >> DEBUG.md
+          echo "**所有包和版本：**" >> DEBUG.md
+          echo '```' >> DEBUG.md
+          awk '/^Package:/ {pkg=$2} /^Version:/ {ver=$2} /^$/ {if(pkg && ver) printf "%-30s %s\n", pkg, ver; pkg=""; ver=""}' Packages | \
+            sort >> DEBUG.md
+          echo '```' >> DEBUG.md
+        else
+          echo "Packages文件未生成" >> DEBUG.md
+        fi
+    
+    - name: 💾 Commit and push changes
+      run: |
+        echo "=== 提交更改 ==="
+        
         git config --local user.email "actions@github.com"
         git config --local user.name "GitHub Actions"
         
         # 添加所有生成的文件
-        git add Packages Packages.bz2 Packages.gz VERSIONS.txt
+        git add Packages Packages.bz2 Packages.gz VERSIONS.txt DEBUG.md
         
         # 检查是否有变化
-        if ! git diff --cached --quiet; then
-          git commit -m "🔄 更新索引 - 包含所有历史版本 $(date +%Y%m%d-%H%M%S)"
-          git push
-          echo "✅ 已提交并推送更改"
-        else
+        if git diff --cached --quiet; then
           echo "📭 没有需要提交的更改"
+        else
+          git commit -m "🔄 更新索引 - 包含所有版本 [$(date +%Y%m%d-%H%M%S)]"
+          git push
+          echo "✅ 已提交更改"
         fi
+        
+        echo ""
+        echo "🎯 下一步："
+        echo "1. 访问 https://raw.githubusercontent.com/${{ github.repository }}/main/Packages"
+        echo "2. 确认所有版本都在文件中"
+        echo "3. 在Sileo中刷新源"
