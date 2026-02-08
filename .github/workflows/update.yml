@@ -1,0 +1,63 @@
+name: Update Believess Repo
+
+on:
+  push:
+    paths:
+      - 'debs/**'
+    branches: [ main ]
+  workflow_dispatch:  # 允许手动运行
+
+jobs:
+  update-index:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 检查代码
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    
+    - name: 安装必要工具
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y dpkg-scanpackages bzip2 gzip coreutils
+    
+    - name: 生成索引文件
+      run: |
+        echo "🔄 正在为 believess 源生成索引..."
+        
+        # 生成 Packages 文件
+        cd debs
+        if [ -n "$(find . -name '*.deb' -print -quit)" ]; then
+          dpkg-scanpackages . /dev/null > ../Packages
+          echo "✅ Packages 文件已生成"
+        else
+          echo "# Empty repository" > ../Packages
+          echo "⚠️  没有找到 .deb 文件，创建空索引"
+        fi
+        cd ..
+        
+        # 创建压缩版本
+        echo "📦 创建压缩文件..."
+        bzip2 -c9 Packages > Packages.bz2 2>/dev/null || touch Packages.bz2
+        gzip -c9 Packages > Packages.gz 2>/dev/null || touch Packages.gz
+        
+        # 添加时间戳
+        echo "⏰ 添加更新时间..."
+        echo "Believess Repository - Last updated: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" > Packages.stamp
+        echo "Source: https://github.com/${{ github.repository }}" >> Packages.stamp
+    
+    - name: 提交更改
+      run: |
+        git config --local user.email "believess-bot@users.noreply.github.com"
+        git config --local user.name "believess-bot"
+        git add Packages Packages.bz2 Packages.gz Packages.stamp
+        
+        # 检查是否有变化
+        if git diff --staged --quiet; then
+          echo "📭 没有需要提交的更改"
+        else
+          git commit -m "🤖 Auto-update: Regenerated index at $(date -u '+%H:%M:%S UTC')"
+          git push
+          echo "✅ 索引已更新并推送"
+        fi
