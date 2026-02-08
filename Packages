@@ -1,0 +1,30 @@
+Package: com.hk.sex.cn.rl
+Version: 1.6
+Architecture: iphoneos-arm64e
+Maintainer: 妖刀
+Depends: mobilesubstrate
+Filename: ./SwipeExtenderX 简体中文包(RootHide).deb
+Size: 8188
+MD5sum: 66872f2cce5a53ad28d56cd105e10c06
+SHA1: 9b0f54da3960c7801c87a58058cea3260c2713e7
+SHA256: 52851178cfe889136651317772f13fb866f219c2b3879bb089f26d8e519c0165
+Section: 嗨-汉化
+Description: SwipeExtenderX 简体中文包(RootHide)。此插件装了汉化包，无法自定义编辑键位功能，这是插件的遗留bug。
+Author: 妖刀
+Name: SwipeExtenderX 简体中文包(RootHide)
+
+Package: com.hk.snapper3.cn.rl
+Version: 1.2.1
+Architecture: iphoneos-arm64e
+Maintainer: 妖刀
+Depends: mobilesubstrate
+Filename: ./Snapper3 简体中文包(RootHide).deb
+Size: 5708
+MD5sum: be58662c7ba7bfcf5ab69536e3c9fce5
+SHA1: 86d263b84a62a9da876917e50124b1ccb0463658
+SHA256: d59a2e4b449f5e61aaed705dc43668b8f3da1c9dfd8714787ffc74667f398273
+Section: 嗨-汉化
+Description: Snapper3 个人自用简体中文包(RootHide)，连同控制中心Snapper3模块也一起汉化了。
+Author: 妖刀
+Name: Snapper3 简体中文包(RootHide)
+
