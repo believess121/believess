@@ -73,3 +73,74 @@ Description: Flex 用于 iOS 开发调试工具
 Author: Mr.Zhang <mr_zhang_00@163.com>
 Name: FlexLoader
 
+Package: com.spark.snowboard
+Version: 1.5.37-Beta4-rootless
+Architecture: iphoneos-arm64e
+Maintainer: Spark
+Installed-Size: 3268
+Pre-Depends: rootless-compat(>= 0.9)
+Depends: mobilesubstrate, preferenceloader
+Conflicts: anemoneteam.anemone, com.anemonetheming.anemone, winterboard
+Replaces: anemoneteam.anemone, com.anemonetheming.anemone, winterboard
+Provides: anemoneteam.anemone, com.anemonetheming.anemone, winterboard
+Filename: ./com.spark.snowboard_1.5.37-Beta4-rootless_iphoneos-arm64e.deb
+Size: 1129560
+MD5sum: 9938855559a3b85829a42c482fe7e13f
+SHA1: 6405b9df90a8037ecdc1bae7c71ffb3743153d5e
+SHA256: 5abdba6276f3e45d90152f6b4f07fbebb83922b3e659e699e60164f0c491d210
+Section: 滑雪板组合
+Description: 此版本在ios16上不能开启图标抓取功能，但能加载角标，需要抓取图标时回退1.5.26版本。
+Author: Spark & Dennis D. Bednarz
+Name: SnowBoard
+
+Package: com.spark.snowboard.effects
+Version: 1.2.2-Beta2-rootless
+Architecture: iphoneos-arm64e
+Maintainer: Spark
+Installed-Size: 412
+Pre-Depends: rootless-compat(>= 0.9)
+Depends: mobilesubstrate, com.spark.snowboard (>= 1.2.100)
+Filename: ./com.spark.snowboard.effects_1.2.2-Beta2-rootless_iphoneos-arm64e.deb
+Size: 34552
+MD5sum: f1f8e022592cf3299b42365cc68bbd4f
+SHA1: d11af0df24b86d4081e9caa016460ede2259bb54
+SHA256: 31ea6a587c75aaff0f086868d3d11ea60091a8805a22eff0d47251a3f8ec0c0f
+Section: 滑雪板组合
+Description: 滑雪板图标效果拓展
+Author: Spark
+Name: SnowBoard Icon Effects Extension
+
+Package: com.spark.snowboard.masks
+Version: 1.2.2-Beta2-rootless
+Architecture: iphoneos-arm64e
+Maintainer: Spark
+Installed-Size: 340
+Pre-Depends: rootless-compat(>= 0.9)
+Depends: mobilesubstrate, com.spark.snowboard (>= 1.2.100)
+Filename: ./com.spark.snowboard.masks_1.2.2-Beta2-rootless_iphoneos-arm64e.deb
+Size: 20240
+MD5sum: 24cf828629bc330179eba37e0ebaa2b0
+SHA1: 13c97101a51fd9f2ebc02f6551343323cf7b86af
+SHA256: 7877d474bff21322ffe7d10088bd0cd7e5678a1d9f33f84824326e8697a44167
+Section: 滑雪板组合
+Description: 滑雪板图标遮罩拓展
+Author: Spark
+Name: SnowBoard Icon Masks Extension
+
+Package: com.spark.snowboard.ui
+Version: 1.3.0~Beta2-rootless
+Architecture: iphoneos-arm64e
+Maintainer: Spark
+Installed-Size: 476
+Pre-Depends: rootless-compat(>= 0.9)
+Depends: mobilesubstrate, com.spark.snowboard (>> 1.2.22)
+Filename: ./com.spark.snowboard.ui_1.3.0~Beta2-rootless_iphoneos-arm64e.deb
+Size: 67060
+MD5sum: dc686b4a2c3c3dcae135e859aebdc4f0
+SHA1: 6e161c35026a18fddd3e5e28be70dd337e4fc808
+SHA256: c35359c6d4d8ce0553e253918975282fa3aad8b7ec8b4d8df03acae95d8521e9
+Section: 滑雪板组合
+Description: 滑雪板系统ui拓展
+Author: Spark
+Name: SnowBoard UI Extension
+
