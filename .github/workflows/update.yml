@@ -1,63 +1,44 @@
-name: Update Believess Repo
+name: Update Repository Index
 
 on:
   push:
     paths:
       - 'debs/**'
-    branches: [ main ]
-  workflow_dispatch:  # 允许手动运行
+  workflow_dispatch:  # 允许手动触发
 
 jobs:
-  update-index:
+  update:
     runs-on: ubuntu-latest
     
     steps:
-    - name: 检查代码
+    - name: Checkout repository
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
     
-    - name: 安装必要工具
+    - name: Install required tools
       run: |
         sudo apt-get update
-        sudo apt-get install -y dpkg-scanpackages bzip2 gzip coreutils
+        sudo apt-get install -y dpkg-dev bzip2 gzip
     
-    - name: 生成索引文件
+    - name: Generate Packages files
       run: |
-        echo "🔄 正在为 believess 源生成索引..."
-        
-        # 生成 Packages 文件
+        echo "正在生成索引文件..."
         cd debs
-        if [ -n "$(find . -name '*.deb' -print -quit)" ]; then
-          dpkg-scanpackages . /dev/null > ../Packages
-          echo "✅ Packages 文件已生成"
-        else
-          echo "# Empty repository" > ../Packages
-          echo "⚠️  没有找到 .deb 文件，创建空索引"
-        fi
+        dpkg-scanpackages . /dev/null > ../Packages
         cd ..
         
-        # 创建压缩版本
-        echo "📦 创建压缩文件..."
-        bzip2 -c9 Packages > Packages.bz2 2>/dev/null || touch Packages.bz2
-        gzip -c9 Packages > Packages.gz 2>/dev/null || touch Packages.gz
+        echo "创建压缩版本..."
+        bzip2 -fk9 Packages > Packages.bz2
+        gzip -fk9 Packages > Packages.gz
         
-        # 添加时间戳
-        echo "⏰ 添加更新时间..."
-        echo "Believess Repository - Last updated: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" > Packages.stamp
-        echo "Source: https://github.com/${{ github.repository }}" >> Packages.stamp
+        echo "添加时间戳..."
+        echo "Last updated: $(date)" > Packages.stamp
     
-    - name: 提交更改
+    - name: Commit and push changes
       run: |
-        git config --local user.email "believess-bot@users.noreply.github.com"
-        git config --local user.name "believess-bot"
+        git config --local user.email "github-actions@users.noreply.github.com"
+        git config --local user.name "GitHub Actions"
         git add Packages Packages.bz2 Packages.gz Packages.stamp
-        
-        # 检查是否有变化
-        if git diff --staged --quiet; then
-          echo "📭 没有需要提交的更改"
-        else
-          git commit -m "🤖 Auto-update: Regenerated index at $(date -u '+%H:%M:%S UTC')"
-          git push
-          echo "✅ 索引已更新并推送"
-        fi
+        git diff --quiet && git diff --staged --quiet || git commit -m "自动更新索引"
+        git push
