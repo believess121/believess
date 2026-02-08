@@ -1,0 +1,155 @@
+name: 🚀 Update Believess Repository
+
+on:
+  # 当 debs 文件夹有变化时触发
+  push:
+    paths:
+      - 'debs/**'
+    branches: [ "main" ]
+  
+  # 允许手动触发
+  workflow_dispatch:
+  
+  # 每天凌晨自动更新一次
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # 第一步：获取代码
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # 获取所有历史
+    
+    # 第二步：设置环境
+    - name: ⚙️ Setup environment
+      run: |
+        echo "工作目录: $(pwd)"
+        echo "文件夹内容:"
+        ls -la
+        echo "debs文件夹内容:"
+        ls -la debs/ 2>/dev/null || echo "debs文件夹不存在"
+    
+    # 第三步：安装工具
+    - name: 🔧 Install dpkg tools
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y dpkg-dev
+        sudo apt-get install -y bzip2 gzip
+        
+        # 验证安装
+        which dpkg-scanpackages || echo "dpkg-scanpackages 未找到，将使用替代方法"
+        dpkg --version
+    
+    # 第四步：生成索引文件（关键步骤）
+    - name: 📦 Generate Packages
+      run: |
+        echo "=== 开始生成索引 ==="
+        
+        # 确保 debs 文件夹存在
+        if [ ! -d "debs" ]; then
+          echo "⚠️ debs文件夹不存在，创建空文件夹"
+          mkdir -p debs
+        fi
+        
+        # 进入 debs 文件夹
+        cd debs
+        
+        # 检查是否有 deb 文件
+        DEB_COUNT=$(find . -name "*.deb" -type f | wc -l)
+        echo "找到 $DEB_COUNT 个 .deb 文件"
+        
+        if [ $DEB_COUNT -eq 0 ]; then
+          echo "ℹ️ 没有deb文件，创建空的Packages文件"
+          echo "# Empty repository - Believess" > ../Packages
+          echo "等待添加软件包..." >> ../Packages
+        else
+          echo "🔄 正在生成 Packages 文件..."
+          # 列出所有deb文件
+          find . -name "*.deb" -type f | while read deb; do
+            echo "处理: $deb"
+          done
+          
+          # 生成 Packages 文件
+          dpkg-scanpackages . /dev/null > ../Packages 2>/dev/null || {
+            echo "❌ dpkg-scanpackages 失败，使用备用方法"
+            
+            # 备用方法：手动创建简单的 Packages 文件
+            echo "# Believess Repository" > ../Packages
+            echo "# Generated on: $(date)" >> ../Packages
+            echo "" >> ../Packages
+            
+            find . -name "*.deb" -type f | while read debfile; do
+              echo "Package: $(basename "$debfile" | cut -d'_' -f1)" >> ../Packages
+              echo "Filename: ./debs/$(basename "$debfile")" >> ../Packages
+              echo "Size: $(stat -c%s "$debfile")" >> ../Packages
+              echo "MD5sum: $(md5sum "$debfile" | cut -d' ' -f1)" >> ../Packages
+              echo "SHA256: $(sha256sum "$debfile" | cut -d' ' -f1)" >> ../Packages
+              echo "" >> ../Packages
+            done
+          }
+        fi
+        
+        cd ..
+        
+        echo "✅ Packages 文件内容预览（前10行）："
+        head -10 Packages
+        
+    # 第五步：创建压缩版本
+    - name: 🗜️ Create compressed versions
+      run: |
+        echo "=== 创建压缩文件 ==="
+        
+        # 创建 Packages.bz2
+        if [ -f "Packages" ]; then
+          echo "📦 创建 Packages.bz2..."
+          bzip2 -kf Packages
+          
+          echo "📦 创建 Packages.gz..."
+          gzip -kf Packages
+          
+          echo "⏰ 创建时间戳文件..."
+          echo "# Believess Repository - https://github.com/${{ github.repository }}" > Packages.stamp
+          echo "# Last updated: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> Packages.stamp
+          echo "" >> Packages.stamp
+          echo "如果看不到软件，请等待几分钟后刷新。" >> Packages.stamp
+          
+          echo "📊 文件大小统计："
+          ls -lh Packages*
+        else
+          echo "❌ Packages 文件不存在，无法创建压缩版本"
+          touch Packages.bz2 Packages.gz Packages.stamp
+        fi
+    
+    # 第六步：提交更改
+    - name: 💾 Commit and push changes
+      run: |
+        echo "=== 提交更改 ==="
+        
+        # 配置 git
+        git config --local user.email "believess-bot@users.noreply.github.com"
+        git config --local user.name "believess-bot"
+        
+        # 添加文件
+        git add Packages Packages.bz2 Packages.gz Packages.stamp
+        
+        # 检查是否有变化
+        if git diff --staged --quiet; then
+          echo "📭 没有需要提交的更改"
+        else
+          # 提交并推送
+          git commit -m "🤖 Auto-update: $(date '+%Y-%m-%d %H:%M:%S')"
+          
+          echo "🔄 正在推送更改..."
+          git push
+          echo "✅ 更改已推送到仓库"
+          
+          echo "📁 已添加的文件："
+          git show --stat --name-only HEAD | grep -E "(Packages|stamp)"
+        fi
+        
+        echo "=== 完成 ==="
