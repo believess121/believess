@@ -1,5 +1,5 @@
 # Believess Repository
-# Generated: 2026-02-10 03:09:09 UTC
+# Generated: 2026-02-10 04:10:36 UTC
 # This file includes ALL versions of all packages
 
 Package: Flex3beta
@@ -20,6 +20,26 @@ Description: Flex 3 beta92 for RootHides Bootstrap & Dopamine by DXcool223
 Author: John Coates
 Name: Flex 3 Beta RootHide Bootstrap
 Recommended: com.rpetrich.rocketbootstrap
+
+
+Package: cn.zqbb.holdcpu
+Version: 2.3.5-1
+Architecture: iphoneos-arm64e
+Maintainer: zqbb
+Installed-Size: 3580
+Depends: mobilesubstrate (>= 0.9.5000) , firmware (>= 15.0), preferenceloader, com.opa334.ccsupport
+Conflicts: com.yourepo.0xash.powercuff, byg.iosios.net.powercuff, com.dao.powercuff, com.rpetrich.powercuff, com.yourepo.0xash.devicemonitor, com.yourepo.0xash.fuckthermal, com.shadow.fuckthermal, com.dao.fuckthermal, byg.iosios.net.monitor, byg.iosios.net.disablethermalmonitord, com.nan.disablethermalmonitord
+Filename: ./debs/cn.zqbb.holdcpu_2.3.5-1_iphoneos-arm64e.deb
+Size: 1268912
+MD5sum: 2212ae0f8b5d82e0b69489a2d33d72af
+SHA1: 0da383f43b97e3c0e00eebaa493de5440beb2c96
+SHA256: 759245710b2ceeebbe64a6bd03826c4715e5021571f1e6619c713fcc41a2d0fc
+Section: Tweaks
+Description: (解除温控) (锁定低电量CPU频率)
+Author: zqbb
+Icon: https://rootless.002599.xyz/web/icon/cn.zqbb.holdcpu
+Name: Hello CPU
+Sileodepiction: https://rootless.002599.xyz/web/cn.zqbb.holdcpu
 
 
 Package: com.0xkuj.safarix
