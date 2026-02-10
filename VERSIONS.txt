@@ -1,6 +1,6 @@
 # Version Manifest
 Repository: believess
-Updated: Tue Feb 10 06:59:05 UTC 2026
+Updated: Tue Feb 10 07:04:37 UTC 2026
 
 Available Packages:
 Flex3beta 1:3~Beta92
@@ -27,7 +27,6 @@ com.lclrc.hammerit 1.7.0
 com.netskao.appdata 1.4.2
 com.netskao.dumpdecrypter 1.5-1
 com.netskao.filzacrack 1.1-9
-com.opa334.crane 1.3.16-4
 com.skypain.flexloader 5.25.19-1
 com.sop.settingsrevamp 3.0.1
 com.spark.snowboard 1.5.26-Beta4-rootless
