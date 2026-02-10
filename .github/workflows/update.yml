@@ -1,9 +1,17 @@
-name: 🔄 Update Repository with All Versions
+name: 🔄 自动构建并更新软件源
 
 on:
-  # 改为特定时间触发，避免与push冲突
+  # 触发方式1：实时触发（debs文件变化时立即构建）
+  push:
+    paths:
+      - 'debs/**'
+    branches: [ main ]
+  
+  # 触发方式2：定时检查（每5分钟检查一次）
   schedule:
-    - cron: '*/5 * * * *'  # 每5分钟检查一次
+    - cron: '*/5 * * * *'
+  
+  # 触发方式3：手动触发
   workflow_dispatch:
     inputs:
       force_rebuild:
@@ -11,19 +19,28 @@ on:
         required: false
         default: 'false'
 
+# 防止并发冲突
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   rebuild-index:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     
     steps:
-    - name: 📥 Checkout repository
+    - name: 📥 检出代码
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
     
-    - name: 📊 Check deb files
+    - name: 📊 检查deb文件
       run: |
         echo "=== 检查debs文件夹 ==="
+        echo "触发方式: ${{ github.event_name }}"
+        echo "触发时间: $(date)"
+        
         if [ ! -d "debs" ]; then
           echo "❌ debs文件夹不存在"
           mkdir -p debs
@@ -35,12 +52,16 @@ jobs:
         echo "🔍 查找所有.deb文件："
         find debs -name "*.deb" -type f | while read deb; do
           echo "  - $deb"
-          # 显示文件信息
           ls -lh "$deb"
         done
         
         COUNT=$(find debs -name "*.deb" -type f | wc -l)
         echo "✅ 总共找到 $COUNT 个.deb文件"
+        
+        # 如果是定时触发但没文件，可以跳过（可选）
+        if [ "${{ github.event_name }}" == "schedule" ] && [ $COUNT -eq 0 ]; then
+          echo "ℹ️  定时触发但无deb文件，继续生成空索引"
+        fi
         
         if [ $COUNT -eq 0 ]; then
           echo "⚠️  警告：没有找到.deb文件"
@@ -134,7 +155,9 @@ jobs:
       run: |
         echo "=== 调试信息 ===" > DEBUG.md
         echo "生成时间: $(date)" >> DEBUG.md
+        echo "触发方式: ${{ github.event_name }}" >> DEBUG.md
         echo "" >> DEBUG.md
+        
         echo "**debs文件夹内容：**" >> DEBUG.md
         echo '```' >> DEBUG.md
         ls -la debs/ >> DEBUG.md 2>/dev/null || echo "空文件夹" >> DEBUG.md
@@ -159,6 +182,7 @@ jobs:
     - name: 💾 Commit and push changes
       run: |
         echo "=== 提交更改 ==="
+        echo "触发方式: ${{ github.event_name }}"
         
         git config --local user.email "actions@github.com"
         git config --local user.name "GitHub Actions"
@@ -170,7 +194,16 @@ jobs:
         if git diff --cached --quiet; then
           echo "📭 没有需要提交的更改"
         else
-          git commit -m "🔄 更新索引 - 包含所有版本 [$(date +%Y%m%d-%H%M%S)]"
+          COMMIT_MSG=""
+          if [ "${{ github.event_name }}" == "schedule" ]; then
+            COMMIT_MSG="🔄 定时更新索引 $(date +'%Y-%m-%d %H:%M:%S')"
+          elif [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            COMMIT_MSG="👨‍💻 手动更新索引 $(date +'%Y-%m-%d %H:%M:%S')"
+          else
+            COMMIT_MSG="🚀 自动更新索引 $(date +'%Y-%m-%d %H:%M:%S')"
+          fi
+          
+          git commit -m "$COMMIT_MSG"
           git push
           echo "✅ 已提交更改"
         fi
@@ -180,3 +213,6 @@ jobs:
         echo "1. 访问 https://raw.githubusercontent.com/${{ github.repository }}/main/Packages"
         echo "2. 确认所有版本都在文件中"
         echo "3. 在Sileo中刷新源"
+        echo ""
+        echo "🌐 GitHub Pages地址："
+        echo "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
