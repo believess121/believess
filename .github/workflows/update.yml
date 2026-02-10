@@ -1,9 +1,9 @@
 name: 🔄 Update Repository with All Versions
-# ===== 添加这3行 =====
+# ===== 替换为这个更强的并发控制 =====
 concurrency: 
-  group: pages-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
-# ====================
+# ===================================
 on:
   push:
     paths:
