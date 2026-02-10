@@ -1,17 +1,9 @@
 name: 🔄 Update Repository with All Versions
 
 on:
-  # ====== 实时触发：文件变化时立即运行 ======
-  push:
-    paths:
-      - 'debs/**'           # debs目录有变化时
-    branches: [ main ]      # 仅在main分支
-  
-  # ====== 定时触发：定期检查 ======
+  # 改为特定时间触发，避免与push冲突
   schedule:
-    - cron: '*/5 * * * *'   # 每5分钟检查一次（比1分钟更合理）
-  
-  # ====== 手动触发：需要时手动运行 ======
+    - cron: '*/1 * * * *'  # 每1分钟检查一次
   workflow_dispatch:
     inputs:
       force_rebuild:
@@ -19,23 +11,11 @@ on:
         required: false
         default: 'false'
 
-# ====== 防止冲突：避免与Pages自动构建冲突 ======
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: false
-
 jobs:
   rebuild-index:
     runs-on: ubuntu-latest
-    timeout-minutes: 5  # 防止卡死
     
     steps:
-    - name: ⏳ 等待其他构建完成
-      if: github.event_name == 'push'
-      run: |
-        echo "等待可能的Pages自动构建完成..."
-        sleep 10
-    
     - name: 📥 Checkout repository
       uses: actions/checkout@v4
       with:
