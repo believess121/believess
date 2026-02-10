@@ -1,5 +1,5 @@
 # Believess Repository
-# Generated: 2026-02-10 07:04:35 UTC
+# Generated: 2026-02-10 07:09:55 UTC
 # This file includes ALL versions of all packages
 
 Package: Flex3beta
@@ -373,6 +373,24 @@ Description: 超级控制中心模块集合！
 Author: 妖刀
 Name: CCLess++(RootHide)
 Sileodepiction: https://xiangfeidexiaohuo.github.io/sileodepiction/ccless/js.json
+
+
+Package: com.dao.icleanerpro
+Version: 7.10.0
+Architecture: iphoneos-arm64e
+Maintainer: Ivano Bilenchi
+Pre-Depends: rootless-compat(>= 0.9)
+Depends: firmware (>= 4.0), findutils, apt | apt7
+Conflicts: org.altervista.exilecom.icleaner, xyz.cypwn.icleanerprocrackrootless, com.exile90.icleanerpro
+Filename: ./debs/com.dao.icleanerpro_7.10.0_iphoneos-arm64e.deb
+Size: 2758754
+MD5sum: 9c562605f19a03408b8a3d072948d401
+SHA1: 414b42400573dda359e425deaa0a9736b45de4ce
+SHA256: d27e1d6bad6520b893bd66f9491d8f615475d324e792e6603138c67f01d9100c
+Section: 嗨-工具
+Description: 真正的iOS系统清理和管理实用程序，默认简体中文，破解版。
+Author: Ivano Bilenchi
+Name: iCleaner Pro(rootless)
 
 
 Package: com.flex3.processor
