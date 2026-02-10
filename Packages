@@ -1,5 +1,5 @@
 # Believess Repository
-# Generated: 2026-02-10 05:56:00 UTC
+# Generated: 2026-02-10 06:02:31 UTC
 # This file includes ALL versions of all packages
 
 Package: Flex3beta
@@ -277,6 +277,24 @@ Author: zqbb
 Icon: https://rootless.002599.xyz/web/icon/cn.zqbb.holdcpu
 Name: Hello CPU
 Sileodepiction: https://rootless.002599.xyz/web/cn.zqbb.holdcpu
+
+
+Package: com.0xkuj.ccdnd
+Version: 1.0.0
+Architecture: iphoneos-arm64e
+Maintainer: 0xkuj
+Installed-Size: 180
+Pre-Depends: rootless-compat(>= 0.9)
+Depends: com.opa334.ccsupport
+Filename: ./debs/com.0xkuj.ccdnd_1.0.0_iphoneos-arm64e.deb
+Size: 11446
+MD5sum: 85cd37ec1daeeac79ce58109c3e40e8e
+SHA1: f92ae52fe5d5056872f7437fe7c410077acbbfb3
+SHA256: 8847027fed8e9c3dedf94c5ce9e24e95734501cd92c8ba563155c845d05c4e24
+Section: Tweaks
+Description: Single DND Toggle for iOS 16
+Author: 0xkuj
+Name: CCDND
 
 
 Package: com.0xkuj.safarix

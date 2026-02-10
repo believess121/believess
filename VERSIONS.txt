@@ -1,6 +1,6 @@
 # Version Manifest
 Repository: believess
-Updated: Tue Feb 10 05:56:03 UTC 2026
+Updated: Tue Feb 10 06:02:34 UTC 2026
 
 Available Packages:
 Flex3beta 1:3~Beta92
@@ -17,6 +17,7 @@ cn.zqbb.holdcpu 2.3.4-5
 cn.zqbb.holdcpu 2.3.5-1
 cn.zqbb.holdcpu 2.3.5-2
 cn.zqbb.holdcpu 2.3.5-3
+com.0xkuj.ccdnd 1.0.0
 com.0xkuj.safarix 1.9.9.1
 com.baiy.switchtheme 1.0.0
 com.cannathea.afc2d-arm64e 1.1.7-21
