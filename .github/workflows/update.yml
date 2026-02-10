@@ -1,13 +1,9 @@
 name: 🔄 Update Repository with All Versions
-# ===== 替换为这个更强的并发控制 =====
-concurrency: 
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-# ===================================
+
 on:
-  push:
-    paths:
-      - 'debs/**'
+  # 改为特定时间触发，避免与push冲突
+  schedule:
+    - cron: '*/5 * * * *'  # 每5分钟检查一次
   workflow_dispatch:
     inputs:
       force_rebuild:
