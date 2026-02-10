@@ -1,0 +1,30 @@
+name: 🚀 软件源构建与部署
+
+on:
+  push:
+    paths:
+      - 'debs/**'
+    branches: [ main ]
+  
+  schedule:
+    - cron: '*/5 * * * *'
+  
+  workflow_dispatch:
+    inputs:
+      force_rebuild:
+        description: '强制重建'
+        required: false
+        default: 'false'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+    # ... [粘贴你刚才更新的完整工作流步骤] ...
+    # 从 "steps:" 开始到文件结束的所有内容
