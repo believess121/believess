@@ -1,5 +1,5 @@
 # Believess Repository
-# Generated: 2026-02-10 05:47:58 UTC
+# Generated: 2026-02-10 05:56:00 UTC
 # This file includes ALL versions of all packages
 
 Package: Flex3beta
@@ -336,6 +336,25 @@ Tag: purpose::daemon, role::enduser
 Author: saurik, Cannathea, i_82, Shadow-
 Depiction: https://cydia.akemi.ai/?page/com.cannathea.afc2d-arm64
 Name: Apple File Conduit "2" (RootHide)
+
+
+Package: com.dao.ccless
+Version: 2.1.0.1
+Architecture: iphoneos-arm64e
+Maintainer: 妖刀
+Pre-Depends: rootless-compat(>= 0.9)
+Depends: firmware (>= 15.0), mobilesubstrate, com.opa334.ccsupport
+Conflicts: com.skypain.cclocation, com.skypain.ccsettrings, com.skypain.ccrespring, com.sop.cpumagicrootless, netskao.ccbadgeclear-rootless, com.mtac.uptime, netskao.alipayscan-rootless, netskao.wechatscan-rootless, com.skypain.ccvpn, netskao.ccswitchdata-rootless, netskao.ccsim-rootless, netskao.tinyccmodules-rootless, netskao.cccellularrate-rootless, netskao.quantumultxlauncher-rootless, com.p2kdev.snapper2cc, com.skypain.ccautobrightness, com.skypain.ccscreenshot, com.skypain.cclockscreen, xyz.cypwn.safeccmodules, com.zqbb.ccpay, com.zqbb.qszqb, com.netskao.ccbadgeclear, com.kingpuffdaddi.control-center.ccvpn, com.netskao.cclifttowake, com.kdt.caperfhudmodule, com.kingpuffdaddi.control-center.ccvibration, com.hk.roothide.cc, com.hk.rootless.cc
+Filename: ./debs/com.dao.ccless_2.1.0.1_iphoneos-arm64e.deb
+Size: 498152
+MD5sum: 9f684ad8c3ec003f74c3fe54580ac551
+SHA1: da9b8c1d7fe25cb0d16a8b918c10c266ea56af92
+SHA256: 3df2d04fb974b3014d5042d6d064a6a357673fc9d6b0108768f7a11e3031aff8
+Section: 控制中心
+Description: 超级控制中心模块集合！
+Author: 妖刀
+Name: CCLess++(RootHide)
+Sileodepiction: https://xiangfeidexiaohuo.github.io/sileodepiction/ccless/js.json
 
 
 Package: com.flex3.processor
