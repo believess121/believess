@@ -1,5 +1,5 @@
 # Believess Repository
-# Generated: 2026-02-10 02:25:38 UTC
+# Generated: 2026-02-10 02:44:15 UTC
 # This file includes ALL versions of all packages
 
 Package: Flex3beta
@@ -20,6 +20,23 @@ Description: Flex 3 beta92 for RootHides Bootstrap & Dopamine by DXcool223
 Author: John Coates
 Name: Flex 3 Beta RootHide Bootstrap
 Recommended: com.rpetrich.rocketbootstrap
+
+
+Package: com.0xkuj.safarix
+Version: 1.9.9.1
+Architecture: iphoneos-arm64e
+Maintainer: 0xkuj
+Pre-Depends: rootless-compat(>= 0.9)
+Depends: mobilesubstrate (>= 0.9.5000), preferenceloader, firmware (>= 15.0)
+Filename: ./debs/com.0xkuj.safarix_1.9.9.1_iphoneos-arm64e.deb
+Size: 325800
+MD5sum: 2513bd47dbdb2fcde07ed7ebdb7ce0ca
+SHA1: 4e87bdbb7c7625a8adb803410c21ef7b44b6153a
+SHA256: 12d22cc4da8fd5621fd1e0e5593f17bbd4ac63770ae7cf40403984d073551417
+Section: 实用插件
+Description: safari增强，已带汉化。
+Author: 0xkuj
+Name: SafariX
 
 
 Package: com.cannathea.afc2d-arm64e
@@ -44,6 +61,43 @@ Tag: purpose::daemon, role::enduser
 Author: saurik, Cannathea, i_82, Shadow-
 Depiction: https://cydia.akemi.ai/?page/com.cannathea.afc2d-arm64
 Name: Apple File Conduit "2" (RootHide)
+
+
+Package: com.flex3.processor
+Version: 1.0-4+debug
+Architecture: iphoneos-arm64e
+Maintainer: DXcool223
+Installed-Size: 2112
+Pre-Depends: rootless-compat(>= 0.9)
+Depends: firmware (>= 15.0), python3, com.opa334.libsandy, unzip
+Filename: ./debs/com.flex3.processor_1.0-4+debug_iphoneos-arm64e.deb
+Size: 1163968
+MD5sum: 51349617d23618569565156a4a749311
+SHA1: 5b135e1e4ffdfbf6b030bf4b3dae8c1bea0c1dee
+SHA256: b6e7dcf0f05fcb0450cc619b8bad0c3aa5c72da2848d3f4d7dbf9dfab12c50d6
+Section: Flex3组合
+Description: 支持ios16的Flex3解析工具。
+Author: DXcool223
+Name: Flex3 IPA Processor
+
+
+Package: com.lclrc.hammerit
+Version: 1.7.0
+Architecture: iphoneos-arm64e
+Maintainer: lclrc(SquidForce)
+Installed-Size: 3808
+Pre-Depends: rootless-compat(>= 0.9)
+Depends: mobilesubstrate, preferenceloader, com.opa334.altlist, com.opa334.ccsupport, com.opa334.libsandy, firmware (>= 14.0)
+Filename: ./debs/com.lclrc.hammerit_1.7.0_iphoneos-arm64e.deb
+Size: 985448
+MD5sum: 9b598acf707bc6cde14116b6d11af510
+SHA1: a8cbae7fcc69c00da414b953345feaf2ddecfa3d
+SHA256: c5fbb91ea146f384930cc2347393adabc185310c0f5f1811f972b96ed16324a4
+Section: 实用插件
+Description: Control your text or translate as you wish.
+Author: lclrc(SquidForce)
+Icon: file:///var/jb/Library/PreferenceBundles/HammerItPrefs.bundle/HammerIt@3x.png
+Name: Hammer It
 
 
 Package: com.netskao.appdata

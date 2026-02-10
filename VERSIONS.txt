@@ -1,10 +1,13 @@
 # Version Manifest
 Repository: believess
-Updated: Tue Feb 10 02:25:39 UTC 2026
+Updated: Tue Feb 10 02:44:16 UTC 2026
 
 Available Packages:
 Flex3beta 1:3~Beta92
+com.0xkuj.safarix 1.9.9.1
 com.cannathea.afc2d-arm64e 1.1.7-21
+com.flex3.processor 1.0-4+debug
+com.lclrc.hammerit 1.7.0
 com.netskao.appdata 1.4.2
 com.skypain.flexloader 5.25.19-1
 com.sop.settingsrevamp 3.0.1
