@@ -1,5 +1,5 @@
 # Believess Repository
-# Generated: 2026-02-10 05:31:39 UTC
+# Generated: 2026-02-10 05:32:00 UTC
 # This file includes ALL versions of all packages
 
 Package: Flex3beta
@@ -20,27 +20,6 @@ Description: Flex 3 beta92 for RootHides Bootstrap & Dopamine by DXcool223
 Author: John Coates
 Name: Flex 3 Beta RootHide Bootstrap
 Recommended: com.rpetrich.rocketbootstrap
-
-
-Package: byg.iosios.net.atria.rootless
-Version: 1.4.1-4
-Architecture: iphoneos-arm64e
-Maintainer: 搬运工
-Installed-Size: 976
-Pre-Depends: rootless-compat(>= 0.9)
-Depends: firmware (>= 13.0), mobilesubstrate, preferenceloader
-Conflicts: com.irepo.boxy4, me.kritanta.homepluspro,acreson.rootless.cj.atria
-Filename: ./debs/byg.iosios.net.atria.rootless_1.4.1-4_iphoneos-arm64e.deb
-Size: 263340
-MD5sum: 2d154564f820b258aba1269d751588e5
-SHA1: 44944b05d11d2bf43435ef82e0fa8c8a34e72351
-SHA256: afaca1522769fee710958976a3125a9e39772329790394dac2070c7b193828e4
-Section: 系统增强
-Description: A proper homescreen layout editor for iOS 13-16自定义桌面图标布局，可以修改5x5布局，移除APP名称显示！美化桌面，非常的好看！本版是由原作者修复更新支持多巴胺，搬运工源水友SINI已更新汉化！感谢分享！搬运工源已修复安装此版本会自动删除你设备上已安装的旧版本！桌面点三下，快速进入插件设置！非常的好用，效果看截图！推荐使用本版本，源里的2.2版本其实是老版本，国人更新的，很久的版本了！
-Author: ren7995
-Icon: https://chinesebuilding.club/pic/cydia.png
-Name: Atria桌面图标自定义
-Sponsor: 搬运工
 
 
 Package: cn.zqbb.fix120hz
