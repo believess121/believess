@@ -1,5 +1,5 @@
 # Believess Repository
-# Generated: 2026-02-11 07:31:15 UTC
+# Generated: 2026-02-11 07:35:15 UTC
 # This file includes ALL versions of all packages
 
 Package: Flex3beta
@@ -170,6 +170,25 @@ Size: 2848694
 MD5sum: c33dda2967618daf05130bc27e97ca63
 SHA1: 3d2c234040de9b20e5134cbb65fd3ebf02e06a97
 SHA256: a4afbde52c59f28d302243b3853f1c3a2c85c44e21f1dc6981e4cd723b80d543
+Section: Tweaks
+Description: Set memorystatus to avoid being killed by the system
+Author: zqbb
+Icon: https://rootless.002599.xyz/web/icon/cn.zqbb.hello.memorystatus.png
+Name: Hello Memory Status
+Sileodepiction: https://rootless.002599.xyz/web/cn.zqbb.hello.memorystatus
+
+
+Package: cn.zqbb.hello.memorystatus
+Version: 3.3.3-5
+Architecture: iphoneos-arm64e
+Maintainer: zqbb
+Installed-Size: 10460
+Depends: mobilesubstrate (>= 0.9.5000) , firmware (>= 14.0), preferenceloader, launchctl
+Filename: ./debs/cn.zqbb.hello.memorystatus_3.3.3-5_iphoneos-arm64e.deb
+Size: 2906618
+MD5sum: a382dd1909094ddfad4b909edb05e4fe
+SHA1: 9944a4c637ced6d8ec3b71620688e5ee3384311a
+SHA256: 2ed0e4f769f2b7cbd69b2762cdee139cc9e1ec6d36910b18144a22178d9e77a4
 Section: Tweaks
 Description: Set memorystatus to avoid being killed by the system
 Author: zqbb
@@ -356,6 +375,24 @@ Depiction: https://cydia.akemi.ai/?page/com.cannathea.afc2d-arm64
 Name: Apple File Conduit "2" (RootHide)
 
 
+Package: com.dao.carbridge13
+Version: 2.0.14
+Architecture: iphoneos-arm64e
+Maintainer: leftyfl1p
+Pre-Depends: rootless-compat(>= 0.9)
+Depends: mobilesubstrate (>= 0.9.5000), firmware (>= 13.0), preferenceloader, com.opa334.altlist (>= 1.0.10)
+Conflicts: com.leftyfl1p.carplay, com.eason.carplay, com.eason.carplay.ios11, com.cortex.carplayenable, xyz.cypwn.carbridge13, com.leftyfl1p.carbridge13
+Filename: ./debs/com.dao.carbridge13_2.0.14_iphoneos-arm64e.deb
+Size: 431800
+MD5sum: addee406f8f54b3c743f44ceee91b608
+SHA1: fce11dd68229eb39b48a18f46bbb6b73849a5637
+SHA256: bccfdfbff939072ea8c0127c79dd81f631ddcaff12aedf779c17d369eb0589b6
+Section: 实用插件
+Description: 在 CarPlay 中打开任何应用程序！
+Author: leftyfl1p <carbridge@havoc.app>
+Name: CarBridge
+
+
 Package: com.dao.ccless
 Version: 2.1.0.1
 Architecture: iphoneos-arm64e
@@ -373,6 +410,24 @@ Description: 超级控制中心模块集合！
 Author: 妖刀
 Name: CCLess++(RootHide)
 Sileodepiction: https://xiangfeidexiaohuo.github.io/sileodepiction/ccless/js.json
+
+
+Package: com.dao.icleanerpro
+Version: 7.10.0
+Architecture: iphoneos-arm64e
+Maintainer: Ivano Bilenchi
+Pre-Depends: rootless-compat(>= 0.9)
+Depends: firmware (>= 4.0), findutils, apt | apt7
+Conflicts: org.altervista.exilecom.icleaner, xyz.cypwn.icleanerprocrackrootless, com.exile90.icleanerpro
+Filename: ./debs/com.dao.icleanerpro_7.10.0_iphoneos-arm64e.deb
+Size: 1108380
+MD5sum: ae066353bbd60232ae59f4e86eff0136
+SHA1: 0633ea5c46fbebcacccf92d09ab130ebbfb4f345
+SHA256: 636f9f7b40cf4346b78b1367a488d5af1c56b796ecedc4864c265afa85580ec6
+Section: 实用插件
+Description: 真正的iOS系统清理和管理实用程序，默认简体中文，破解版。
+Author: Ivano Bilenchi
+Name: iCleaner Pro(rootless)
 
 
 Package: com.flex3.processor
