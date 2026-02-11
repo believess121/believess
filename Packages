@@ -1,5 +1,5 @@
 # Believess Repository
-# Generated: 2026-02-11 13:25:57 UTC
+# Generated: 2026-02-11 13:39:44 UTC
 # This file includes ALL versions of all packages
 
 Package: Flex3beta
@@ -557,6 +557,27 @@ Section: Tweaks
 Description: Multiple containers for your applications!
 Author: opa334
 Name: Crane
+
+
+Package: com.qiop1379.swipeextenderx
+Version: 1.6.1~2
+Architecture: iphoneos-arm64e
+Maintainer: MiRO <tweaks_support@miro92.com>
+Installed-Size: 614
+Pre-Depends: rootless-compat(>= 0.9)
+Depends: firmware (>=14.0), mobilesubstrate, org.thebigboss.libcolorpicker
+Filename: ./debs/com.qiop1379.swipeextenderx_1.6.1~2_iphoneos-arm64e.deb
+Size: 98756
+MD5sum: 202f753fd48ca2cb6dce0c21445da93e
+SHA1: 6d5959d8f2db776c71aa629b70a536d0a0cee9c5
+SHA256: ae4e80874bebac21ed5f49db551a4c8d76aa5b2d90a48b64a9bad1b241931fe2
+Section: 实用插件
+Description: 用这款传奇的SwipeExpander调整的完整重制版重塑你的键盘，专为在现代iOS上工作而设计！已带汉化。
+Tag: compatible_min::ios14.0
+Author: MiRO <tweaks_support@miro92.com>
+Depiction: https://chariz.com/get/swipeextenderx
+Icon: https://img.chariz.cloud/icon/swipeextenderx/icon@3x.png
+Name: SwipeExtenderX
 
 
 Package: com.skypain.flexloader
