@@ -1,5 +1,5 @@
 # Believess Repository
-# Generated: 2026-02-11 12:48:06 UTC
+# Generated: 2026-02-11 13:16:01 UTC
 # This file includes ALL versions of all packages
 
 Package: Flex3beta
@@ -673,5 +673,24 @@ Description: svp分屏，去格机代码，放心使用。
 Author: sunshinesong
 Name: split-view-pro
 Ts: sp-sss
+
+
+Package: me.tomt000.copylog
+Version: 1.7.1
+Architecture: iphoneos-arm64e
+Maintainer: TomT000
+Installed-Size: 2240
+Pre-Depends: rootless-compat(>= 0.9)
+Depends: mobilesubstrate, preferenceloader
+Conflicts: com.0xkuj.copylogfix16
+Filename: ./debs/me.tomt000.copylog_1.7.1_iphoneos-arm64e.deb
+Size: 1045760
+MD5sum: 25d68ded3ccd07ea6006be40384f9586
+SHA1: 19ff2cced2eeaef9ae8d41350d0a437596d581ea
+SHA256: b93aad8278ae488c828a32f59cb29b2c7803c9262989ba86f689a72b494af614
+Section: 实用插件
+Description: 史上最优雅的iOS剪贴板历史管理器！已带汉化。
+Author: TomT000
+Name: CopyLog
 
 
